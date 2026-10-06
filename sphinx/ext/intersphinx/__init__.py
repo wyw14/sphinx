@@ -23,6 +23,7 @@ __all__ = (
     'IntersphinxRole',
     'IntersphinxRoleResolver',
     'InventoryAdapter',
+    'diff_main',
     'fetch_inventory',
     'inspect_main',
     'install_dispatcher',
@@ -39,7 +40,7 @@ from types import NoneType
 from typing import TYPE_CHECKING
 
 import sphinx
-from sphinx.ext.intersphinx._cli import inspect_main
+from sphinx.ext.intersphinx._cli import diff_main, inspect_main
 from sphinx.ext.intersphinx._load import (
     fetch_inventory,
     load_mappings,

@@ -1,6 +1,17 @@
 Release 9.1.1 (in development)
 ==============================
 
+Features added
+--------------
+
+* #2495: intersphinx: Add offline comparison of two inventory files to the
+  ``python -m sphinx.ext.intersphinx`` command-line utility.  Passing two
+  inventory paths reports the semantic differences between them --
+  disappeared objects, changed target URIs, changed display information and
+  same-name candidate changes -- and can correlate them with collected
+  reference locations using ``--references``.  Compression, entry ordering
+  and the ``$``/``-`` abbreviations are not reported as changes.
+
 Bugs fixed
 ----------
 

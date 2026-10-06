@@ -256,6 +256,50 @@ The following example prints the Intersphinx mapping of the Python documentation
 
    $ python -m sphinx.ext.intersphinx https://docs.python.org/3/objects.inv
 
+Comparing two Intersphinx mapping files
+---------------------------------------
+
+To assess the impact of upgrading an external documentation set,
+run the same command with *two* inventory files (the old and the new one).
+Both inventories are read and compared offline -- no network access is
+performed -- and the semantic differences are reported::
+
+   $ python -m sphinx.ext.intersphinx objects-old.inv objects-new.inv
+
+The following change categories are distinguished:
+
+* objects that **disappeared** from the inventory, so existing references
+  can no longer be resolved;
+* objects whose **target URI** changed;
+* objects whose **display information** (display name, or the project
+  name and version shown in the link tooltip) changed;
+* names whose set of **same-name candidates** (object types) changed,
+  which may change the target of unqualified ``:any:`` references.
+
+Differences that do not affect references are ignored: both inventories
+are parsed into the same normalised representation, so a different zlib
+compression level, a different ordering of the entries, or different uses
+of the ``$`` URI and ``-`` display-name abbreviations are not reported.
+
+The changes can be correlated with the places in the project that
+reference the external objects, using ``--references`` with a file of
+previously collected reference locations, one per line::
+
+   $ python -m sphinx.ext.intersphinx \
+       --references references.tsv objects-old.inv objects-new.inv
+
+Each line of ``references.tsv`` is tab-separated with two or three
+columns: a location label shown in the report, optionally the
+``domain:object`` type, and the reference target.
+The two-column form references a name without a type
+(as used by the ``:any:`` role), the three-column form references
+a typed object:
+
+.. code-block:: text
+
+   doc/tutorial.rst:42	py:class	zipfile.ZipFile
+   doc/intro.rst:10	some-label
+
 Using Intersphinx with inventory file under Basic Authorization
 ---------------------------------------------------------------
 
